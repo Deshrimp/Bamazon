@@ -131,16 +131,9 @@ function addProduct() {
         message: "What is the name of the product?"
       },
       {
-        type: "list",
-        message: "Which department does it belong to?",
-        choices: [
-          "Wellbeing",
-          "Ecofriendly",
-          "Meditation",
-          "Hygiene",
-          "Kitchen"
-        ],
-        name: "deparment"
+        type: "input",
+        name: "deparment",
+        message: "Which department does it belong to?"
       },
       {
         type: "input",

@@ -58,36 +58,18 @@ function viewProductsByDep() {
             res[i].id +
             "            | " +
             res[i].department_name +
-            "         | " +
+            "          | " +
             res[i].over_head_costs +
             "           | " +
             res[i].product_sales
         )
         console.log("---------------------------------")
       }
-      /*for (var i = 0; i < res1.length; i++) {
-      depName = res1[i].department_name
-      depId = res1[i].id
-      ovHeadCosts = res1[i].over_head_costs
-      connection.query(
-        "SELECT * FROM products WHERE ?",
-        [{ department_name: depName }],
-        function(err, res2) {
-          console.log(
-            "| " +
-              depId +
-              "             | " +
-              depName +
-              "         | " +
-              ovHeadCosts +
-              "  |  "
-          )
-        }
-      )
-    }*/
     }
   )
 }
 function newDepart() {
   console.log("Creating new Dep")
+  connection.query("ALTER TABLE bamazon_db`.`departments` ADD COLUMN `name` VARCHAR(30) NULL DEFAULT NULL AFTER `over_head_costs`
+  )
 }
