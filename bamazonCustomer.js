@@ -43,8 +43,63 @@ function askUser() {
       // After the prompt, store the user's response in a variable called location.
     ])
     .then(function(inquirerResponse) {
-      // console.log(location.userInput);
-      console.log(inquirerResponse.productID)
-      console.log(inquirerResponse.productUnits)
+      connection.query(
+        "SELECT * FROM products WHERE ?",
+        [{ id: inquirerResponse.productID }],
+        function(err, res) {
+          var ProductStock = res[0].stock_quantity
+          var ProductName = res[0].product_name
+          var ProductPrice = res[0].price
+          var UserStock = inquirerResponse.productUnits
+          var price
+          var remaining
+          if (ProductStock > UserStock) {
+            price = ProductPrice * UserStock
+            remaining = ProductStock - UserStock
+
+            console.log("------------------------")
+            console.log(
+              "Store has a total of " + ProductStock + " " + ProductName
+            )
+            console.log("Client just bought " + UserStock + " " + ProductName)
+            updateDatabase(remaining, ProductName)
+            console.log("------------------------")
+            console.log("Total Price: $" + price)
+          } else {
+            console.log("Sorry, we're out")
+          }
+        }
+      )
     })
+}
+function updateDatabase(remaining, ProductName) {
+  console.log("Updating database...\n")
+  connection.query(
+    "UPDATE products SET ? WHERE ?",
+    [
+      {
+        stock_quantity: remaining
+      },
+      {
+        product_name: ProductName
+      }
+    ],
+    function(err, res) {
+      console.log("-----------------------")
+      console.log(res.affectedRows + " products updated!\n")
+      connection.query(
+        "SELECT * FROM products WHERE ?",
+        [{ product_name: ProductName }],
+        function(err, res) {
+          console.log(
+            "Store has a total of " +
+              res[0].stock_quantity +
+              " " +
+              res[0].product_name +
+              " left"
+          )
+        }
+      )
+    }
+  )
 }
