@@ -56,7 +56,6 @@ function askUser() {
           if (ProductStock > UserStock) {
             price = ProductPrice * UserStock
             remaining = ProductStock - UserStock
-
             console.log("------------------------")
             console.log(
               "Store has a total of " + ProductStock + " " + ProductName
@@ -102,4 +101,29 @@ function updateDatabase(remaining, ProductName) {
       )
     }
   )
+  Loopet()
+}
+function Loopet() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Would you like to buy another product?",
+        choices: ["Yes", "No"],
+        name: "Loop"
+      }
+    ])
+    .then(function(inquirerResponse) {
+      switch (inquirerResponse.Loop) {
+        case "Yes":
+          askUser()
+          break
+        case "No":
+          // Log all results of the SELECT statement
+          connection.end()
+          break
+        default:
+          console.log("Not a valid option")
+      }
+    })
 }
