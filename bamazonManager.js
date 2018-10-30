@@ -122,7 +122,57 @@ function addInventory() {
     })
 }
 function addProduct() {
-  console.log("Adding new Product")
+  console.log("ADD A NEW PRODUCT")
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "productName",
+        message: "What is the name of the product?"
+      },
+      {
+        type: "list",
+        message: "Which department does it belong to?",
+        choices: [
+          "Wellbeing",
+          "Ecofriendly",
+          "Meditation",
+          "Hygiene",
+          "Kitchen"
+        ],
+        name: "deparment"
+      },
+      {
+        type: "input",
+        name: "productPrice",
+        message: "What is the price of the product?"
+      },
+      {
+        type: "input",
+        name: "productStock",
+        message: "How many do we have?"
+      }
+      // After the prompt, store the user's response in a variable called location.
+    ])
+    .then(function(inquirerResponse) {
+      var prodName = inquirerResponse.productName
+      var prodDep = inquirerResponse.deparment
+      var prodPrice = parseInt(inquirerResponse.productPrice)
+      var prodStock = parseInt(inquirerResponse.productStock)
+      connection.query(
+        "INSERT INTO products SET ?",
+        {
+          product_name: prodName,
+          department_name: prodDep,
+          price: prodPrice,
+          stock_quantity: prodStock
+        },
+        function(err, res) {
+          console.log(res.affectedRows + " product inserted!\n")
+          // Call updateProduct AFTER the INSERT completes
+        }
+      )
+    })
 }
 function updateDatabase(stockUpdated, ProductName) {
   console.log("Updating database...\n")
