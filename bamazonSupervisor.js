@@ -70,6 +70,7 @@ function viewProductsByDep() {
 }
 function newDepart() {
   console.log("Creating new Dep")
-  connection.query("ALTER TABLE bamazon_db`.`departments` ADD COLUMN `name` VARCHAR(30) NULL DEFAULT NULL AFTER `over_head_costs`
+  connection.query(
+    "ALTER TABLE bamazon_db`.`departments` ADD COLUMN `name` VARCHAR(30) NULL DEFAULT NULL AFTER `over_head_costs`"
   )
 }
