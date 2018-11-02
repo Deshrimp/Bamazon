@@ -53,15 +53,18 @@ function viewProductsByDep() {
         "| ------------- | --------------- | --------------- | ------------- | ------------ |"
       )
       for (var i = 0; i < res.length; i++) {
+        var totalProfit = res[i].product_sales - res[i].over_head_costs
         console.log(
           "| " +
             res[i].id +
-            "            | " +
+            "             | " +
             res[i].department_name +
             "          | " +
             res[i].over_head_costs +
-            "           | " +
-            res[i].product_sales
+            "          | " +
+            res[i].product_sales +
+            "            | " +
+            totalProfit
         )
         console.log("---------------------------------")
       }
